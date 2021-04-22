@@ -1,4 +1,4 @@
-module cas
+module github.com/minghsu0107/cassandra-golang-example
 
 go 1.15
 

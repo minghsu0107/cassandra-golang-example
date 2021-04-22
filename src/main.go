@@ -165,17 +165,18 @@ func main() {
 			Content:  "five",
 		},
 	}
-	// insert employees
+	// insert employees in batch
+	b := session.NewBatch(gocql.UnloggedBatch).WithContext(context.Background())
 	for _, message := range messages {
-		if err := session.Query("INSERT INTO messages (channel, username, msg_id, content) VALUES (?, ?, ?, ?)",
-			message.Channel,
-			message.Username,
-			message.MsgID,
-			message.Content,
-		).WithContext(context.Background()).Exec(); err != nil {
-			fmt.Println("insert error")
-			log.Fatal(err)
-		}
+		b.Entries = append(b.Entries, gocql.BatchEntry{
+			Stmt:       "INSERT INTO messages (channel, username, msg_id, content) VALUES (?, ?, ?, ?)",
+			Args:       []interface{}{message.Channel, message.Username, message.MsgID, message.Content},
+			Idempotent: true,
+		})
+	}
+	err = session.ExecuteBatch(b)
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// page state
