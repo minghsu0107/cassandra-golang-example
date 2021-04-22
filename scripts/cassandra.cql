@@ -8,3 +8,11 @@ CREATE TABLE employees (
     PRIMARY KEY(id)
 );
 CREATE INDEX ON employees(age);
+
+CREATE TABLE messages (
+    channel UUID,
+    msg_id int,
+    username varchar,
+    content text,
+    PRIMARY KEY((channel), msg_id, username)
+) WITH CLUSTERING ORDER BY (msg_id DESC);
