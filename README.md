@@ -13,6 +13,14 @@ CREATE TABLE employees (
     PRIMARY KEY(id)
 );
 CREATE INDEX ON employees(age);
+
+CREATE TABLE messages (
+    channel UUID,
+    msg_id int,
+    username varchar,
+    content text,
+    PRIMARY KEY((channel), msg_id, username)
+) WITH CLUSTERING ORDER BY (msg_id DESC);
 ```
 The keyspace will be created in Cassandra on startup. Note that we have created an index on `age` field so that we could query by `age` besides primary key.
 ## Usage
