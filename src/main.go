@@ -224,7 +224,7 @@ func main() {
 	for scanner.Next() {
 		var (
 			msgID   int
-			content string
+			content *string
 		)
 		err := scanner.Scan(&msgID, &content)
 		if err != nil {
