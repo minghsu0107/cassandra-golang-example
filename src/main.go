@@ -165,7 +165,7 @@ func main() {
 			Content:  "five",
 		},
 	}
-	// insert employees in batch
+	// insert messages in batch
 	b := session.NewBatch(gocql.UnloggedBatch).WithContext(context.Background())
 	for _, message := range messages {
 		b.Entries = append(b.Entries, gocql.BatchEntry{
