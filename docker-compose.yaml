@@ -2,7 +2,7 @@ version: '2'
 
 services:
   server:
-    image: golang:1.15
+    image: golang:1.17
     restart: always
     environment:
       - CASSANDRA_HOST=cassandra

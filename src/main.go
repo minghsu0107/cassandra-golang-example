@@ -88,7 +88,7 @@ func main() {
 	// use select to get the employee we just entered
 	var userFromDB User
 
-	if err := session.Query("SELECT id, firstname, lastname, age FROM employees WHERE id=?", id).
+	if err := session.Query("SELECT id, firstname, lastname, age FROM employees WHERE id = ? LIMIT 1", id).
 		WithContext(context.Background()).
 		Scan(&userFromDB.ID, &userFromDB.FirstName, &userFromDB.LastName, &userFromDB.Age); err != nil {
 		fmt.Println("select error")
@@ -117,7 +117,7 @@ func main() {
 
 	// show the updated data
 	var ageName AgeName
-	if err := session.Query("SELECT firstname, age FROM employees WHERE id = ?", id).
+	if err := session.Query("SELECT firstname, age FROM employees WHERE id = ? LIMIT 1", id).
 		WithContext(context.Background()).
 		Scan(&ageName.FirstName, &ageName.Age); err != nil {
 		fmt.Println("select error")
