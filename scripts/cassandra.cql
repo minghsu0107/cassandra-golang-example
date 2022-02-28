@@ -14,5 +14,5 @@ CREATE TABLE messages (
     msg_id int,
     username varchar,
     content text,
-    PRIMARY KEY((channel), msg_id, username)
+    PRIMARY KEY((channel), msg_id)
 ) WITH CLUSTERING ORDER BY (msg_id DESC);

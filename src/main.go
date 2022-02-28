@@ -241,4 +241,19 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	if err := session.Query("UPDATE messages SET content = ? WHERE channel = ? AND msg_id = ?", "new content", channel, 6).
+		WithContext(context.Background()).Exec(); err != nil {
+		fmt.Println("udpate error")
+		log.Fatal(err)
+	}
+
+	var newContent string
+	if err := session.Query("SELECT content FROM messages WHERE channel = ? AND msg_id = ? LIMIT 1", channel, 6).
+		WithContext(context.Background()).
+		Scan(&newContent); err != nil {
+		fmt.Println("select error")
+		log.Fatal(err)
+	}
+	fmt.Println(newContent)
 }
